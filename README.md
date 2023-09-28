@@ -1,6 +1,23 @@
 # INTERNACIONALIZACIÓN EN NEXT.JS 13 SIN USAR I18NEXT
 
+```
+UTILIZA ESTE PROYECTO:
+
+git clone https://github.com/luciaaldana/next13-internationalization.git
+
+cd next13-internationalization
+npm install
+
+npm run dev
+```
+
+---
+
+# PASOS:
+
 ## 🏁 Crear el proyecto
+
+Si ya tienes tu proyecto, puedes saltar este paso.
 
 ```bash
 npx create-next-app@latest
@@ -141,4 +158,5 @@ dictionary: Record<string, string>
 ## Referencias
 
 https://nextjs.org/docs/app/building-your-application/routing/internationalization
+
 https://github.dev/vercel/next.js/tree/canary/examples/app-dir-i18n-routing
