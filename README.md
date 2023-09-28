@@ -23,7 +23,7 @@ Si ya tienes tu proyecto, puedes saltar este paso.
 npx create-next-app@latest
 ```
 
-What is your project named? … internationalization-without-i18next
+What is your project named? … next13-internationalization
 
 ✔ Would you like to use TypeScript? … No / Yes ✅
 
@@ -38,7 +38,7 @@ What is your project named? … internationalization-without-i18next
 ✔ Would you like to customize the default import alias? … No / Yes ❌
 
 ```bash
-cd internationalization-without-i18next
+cd next13-internationalization
 ```
 
 ---
