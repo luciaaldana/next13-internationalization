@@ -1,5 +1,11 @@
 # INTERNACIONALIZACIÓN EN NEXT.JS 13 SIN USAR I18NEXT
 
+En este artículo te mostraré cómo aplicar la internacionalización en next js 13 con app directory `sin i18next`.
+
+Si tu proyecto es pequeño, disfrutarás de algunas ventajas al hacerlo de este modo, ya que esta solución simplifica tanto el código como su mantenimiento y reduce al mínimo la cantidad de dependencias necesarias.
+
+Pero si tu proyecto crece o es grande, tendrás algunas desventajas si requieres de características avanzadas de internacionalización, como la [interpolación](https://www.i18next.com/translation-function/interpolation), implementar tu propia solución puede volverse complicado, propenso a errores e implicaría más trabajo manual. En ese caso te recomiendo utilizar i18next. Si quieres ver cómo hacerlo, puedes verlo en este [artículo]().
+
 ```
 UTILIZA ESTE PROYECTO:
 
@@ -14,6 +20,8 @@ npm run dev
 ---
 
 # PASOS:
+
+🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻
 
 ## 🏁 Crear el proyecto
 
@@ -43,6 +51,8 @@ cd next13-internationalization
 
 ---
 
+🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻
+
 ## ⬇ Instalar paquetes
 
 ```bash
@@ -50,19 +60,23 @@ npm install @formatjs/intl-localematcher negotiator
 npm i --save-dev @types/negotiator
 ```
 
+Estos dos módulos nos ayudarán a adapatarnos a las preferencias del usuario al seleccionar automáticamente el idioma más apropiado para el usuario en función de las preferencias de idioma proporcionadas en las cabeceras HTTP y la configuración de internacionalización que definiremos.
+
 ---
+
+🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻
 
 ## ⚙️ Enrutamiento
 
-#### (1) Creamos un archivo i18n-config.ts:
+#### (1) Creamos un archivo lng-config.ts:
 
 ```javascript
 
-📂 src => 📄 i18n-config.ts
+📂 src => 📄 lng-config.ts
 
 ```
 
-[Link al archivo i18n-config.ts](src/i18n-config.ts)
+[Link al archivo lng-config.ts](src/lng-config.ts)
 
 En este archivo definimos los lenguajes que vamos a utilizar y el lenguaje por defecto.
 
@@ -87,6 +101,12 @@ Si cambia su lenguaje preferido, cambiará el 'accept-language' que definimos en
 
 #### (3) Creamos el diccionario de traducciones que vamos a utilizar:
 
+El diccionario es la base de nuestra internacionalización que nos permite ofrecer la experiencia de usuario en diferentes idiomas.
+
+En una carpeta llamada **dictionaries**, organizaremos los archivos de internacionalización de una manera estructurada. Creamos carpetas dentro de **dictionaries** con el nombre de un idioma específico, como 'es' para español, 'en' para inglés, como definimos en **locales** en el archivo **lng-config.ts**.
+
+Dentro de cada una de estas carpetas de idioma, crearemos los archivos .json que contendrán las traducciones para cada sección que también definimos en el archivo lng-config.ts, como 'home' y 'second-page'. Todos los json deben respetar la misma estructura en cada carpeta.
+
 ```javascript
 
 // la carpeta `en` será el diccionario para las traducciones en inglés.
@@ -104,11 +124,7 @@ Si cambia su lenguaje preferido, cambiará el 'accept-language' que definimos en
 
 [Link al archivo es.json](src/dictionaries/es.json)
 
-Agrega tantos archivos json como lengaujes tengas.
-
-Todos los json deben respetar la misma estructura.
-
-#### (3) Creamos la función para traer el diccionario que necesitamos según el lenguaje seleccionado:
+#### (4) Creamos la función para traer el diccionario que necesitamos según el lenguaje seleccionado:
 
 ```javascript
 
@@ -120,23 +136,28 @@ Todos los json deben respetar la misma estructura.
 
 Aquí tendremos una función que recibe el lenguaje que estamos utilizando y la sección en la que estamos. Esto devuelve el archivo json que creamos en `dictionaries` que corresponde a ese lenguaje y sección.
 
-#### (4) En el layout.tsx agregamos los lenguajes:
+#### (5) En el layout.tsx agregamos los lenguajes:
 
 Utilizamos `generateStaticParams` para añadir el idioma al HTML.
 
+[Link al layout.tsx](src/app/%5Blang%5D//layout.tsx)
+
 ---
+
+🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻
 
 ## 🌈 Usar las traducciones en Server Component
 
 [Link a la Page.tsx](src/app/%5Blang%5D//page.tsx)
 
-El componente será asíncrono, utilizaremos `async/await`, para resolver la promesa de `getDictionary`.
+El componente Home utiliza la función `getDictionary` para obtener las traducciones y configuraciones necesarias para mostrar contenido multilingüe en nuestra aplicación. Para asegurarnos de que la aplicación funcione de manera fluida y que no se bloquee mientras espera que las traducciones se carguen, utilizamos async/await al llamar a getDictionary.
 
-El lenguaje estará disponible por parámetros, cómo definimos en el `layout.tsx`.
+La función getDictionary requiere dos parámetros:
 
-La sección la importamos desde la definición de sections en el archivo `i18n-config.ts` para evitar errores tipográficos.
+- El lenguaje: estará disponible por parámetros, cómo definimos en el layout.tsx.
+- La sección: la importamos desde la definición de sections en el archivo lng-config.ts para evitar errores tipográficos.
 
-Entonces getDictionary me devuelve el archivo json de la sección que indicamos y del direccionario que estamos utilizando.
+Entonces getDictionary me devolverá el archivo json de la sección que indicamos y del diccionario que estemos utilizando.
 
 ## 🌈 Usar las traducciones en Client Component
 
@@ -154,6 +175,22 @@ dictionary: Record<string, string>
 ```
 
 ---
+
+🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻🔻
+
+## 🔥 Crear un Switch de lenguaje
+
+Para cambiar de lenguaje, lo que hacemos es usar la ruta dinámica que creamos con la carpeta [lng]. Entonces debemos navegar a la ruta del lenguaje que queramos.
+
+El componente será un client component porque usaremos el hook usePathname.
+
+Este hook (`usePathname`) es necesario para hacer la navegación en caso de que tengamos una url con más partes que el dominio, por ejemplo /second-page que tenemos definida en esta estructura. Tomamos el path completo y luego con una expresión regular, reemplazamos el lenguaje por el que elegimos en el switch.
+
+En langRegex modificamos nuestro array de languajes definido en lng-config.ts para usarlo en la expresión regular y no tener que agregar manualmente al switch algún idioma extra.
+
+En el atributo href del elemento Link, sustituimos el idioma actual en la ruta de acceso (pathname) con el idioma que hemos seleccionado en el interruptor de idiomas. Esto nos permite navegar a la misma página con el nuevo idioma elegido.
+
+[Link al componente SwitchLng](src/components/SwitchLng/index.tsx)
 
 ## Referencias
 
