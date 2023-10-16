@@ -1,11 +1,11 @@
 import 'server-only';
-import { i18n, Locale } from './i18n-config';
+import { lngConfig, Locale } from './lng-config';
 
 type DictionaryFunction = (section: string) => Promise<any>;
 
 const dictionaries: { [key: string]: DictionaryFunction } = {};
 
-i18n.locales.forEach((language) => {
+lngConfig.locales.forEach((language) => {
   dictionaries[language] = (section: string) =>
     import(`./dictionaries/${language}/${section}.json`).then((module) => module.default);
 });

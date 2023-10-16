@@ -1,11 +1,11 @@
 import { Inter } from 'next/font/google';
-import { i18n } from '../../i18n-config';
+import { lngConfig } from '../../lng-config';
 import '../globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export async function generateStaticParams() {
-  return i18n.locales.map((locale) => ({ lang: locale }));
+  return lngConfig.locales.map((locale) => ({ lang: locale }));
 }
 
 export default function Root({ children, params }: { children: React.ReactNode; params: { lang: string } }) {

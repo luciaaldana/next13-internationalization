@@ -1,4 +1,4 @@
-export const i18n = {
+export const lngConfig = {
   defaultLocale: 'en',
   locales: ['en', 'es'],
   sections: {
@@ -7,4 +7,4 @@ export const i18n = {
   },
 } as const;
 
-export type Locale = (typeof i18n)['locales'][number];
+export type Locale = (typeof lngConfig)['locales'][number];

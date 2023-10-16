@@ -1,12 +1,12 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { i18n } from '@/i18n-config';
+import { lngConfig } from '../../lng-config';
 import styles from './styles.module.css';
 
 const SwitchLng = ({ lng, dictionary }: { lng: string; dictionary: Record<string, string> }) => {
   const pathname = usePathname();
-  const languages = i18n.locales;
+  const languages = lngConfig.locales;
   const langRegex = languages.join('|');
 
   return (

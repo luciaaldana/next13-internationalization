@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { getDictionary } from '@/get-dictionary';
-import { i18n, Locale } from '@/i18n-config';
+import { lngConfig, Locale } from '@/lng-config';
 import SwitchLng from '@/components/SwitchLng';
 import styles from '../page.module.css';
 
 const SecondPage = async ({ params: { lang } }: { params: { lang: Locale } }) => {
-  const dictionary = await getDictionary(lang, i18n.sections.second_page);
+  const dictionary = await getDictionary(lang, lngConfig.sections.second_page);
 
   return (
     <main className={styles.main}>
